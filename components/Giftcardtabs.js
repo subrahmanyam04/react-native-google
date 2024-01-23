@@ -35,17 +35,17 @@ const Giftcardtabs = () => {
 
 export default Giftcardtabs;
 
-const styles = StyleSheet.create({
-    tabBar: {
-        backgroundColor: '#fff',
-    },
-    tabBarLabel: {
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
+// const styles = StyleSheet.create({
+//     tabBar: {
+//         backgroundColor: '#fff',
+//     },
+//     tabBarLabel: {
+//         fontSize: 16,
+//         fontWeight: 'bold',
+//     },
    
 
-});
+// });
 
 
 

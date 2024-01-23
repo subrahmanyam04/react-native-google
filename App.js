@@ -37,6 +37,7 @@ export default function App() {
     <StatusBar barStyle="dark-content" /> 
     <Provider store={store}>
     <Navbars/>
+ 
     </Provider>
       
     </>

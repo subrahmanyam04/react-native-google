@@ -2,7 +2,7 @@ import * as actionType from '../Actions/actionType'
 
 
 const initialState = {
-    token: []  ,
+    token: ''  ,
   
   };
   

@@ -12,6 +12,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { firebase } from '../firebase'
 import { connect } from 'react-redux';
 import { Settoken } from "../Redux/Actions/Tokenaction";
+import 'expo-dev-client'
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import auth from '@react-native-firebase/auth';
 
 const Signupmodalform = ({ Settoken, token }) => {
 
@@ -117,6 +120,42 @@ const Signupmodalform = ({ Settoken, token }) => {
         }
     }
 
+
+    GoogleSignin.configure({
+        webClientId: '518917201034-32cov3h39la2nqmtf12o90vvs0vv75ji.apps.googleusercontent.com',
+    });
+
+    async function onGoogleButtonPress() {
+        // Check if your device supports Google Play
+        // await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+        // Get the users ID token
+        const { idToken } = await GoogleSignin.signIn();
+        // console.log('this google sign in token', idToken)
+        const currentUser = auth().currentUser;
+        const idToken2 = await currentUser.getIdToken();
+        console.log('this google sign in token2', idToken2)
+        await AsyncStorage.setItem('userAuthData', idToken2);
+
+        // Retrieve the stored token and update the state
+        const storedToken = await AsyncStorage.getItem('userAuthData'); 
+        Settoken(storedToken);
+        setEmail('')
+        setPassword('')
+        setModalVisible(false)
+        console.log('ok')
+        // Create a Google credential with the token
+        const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+        // Sign-in the user with the credential
+        const user = auth().signInWithCredential(googleCredential);
+        user.then((users) => {
+            console.log(users);
+        })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
     return (
         <>
             {/* <Text>ya this is modal form</Text> */}
@@ -197,7 +236,7 @@ const Signupmodalform = ({ Settoken, token }) => {
                             {/* google sign in button */}
 
                             <View>
-                                <TouchableOpacity activeOpacity={1}>
+                                <TouchableOpacity activeOpacity={1} onPress={() => onGoogleButtonPress().then(() => console.log('Signed in with Google!'))}>
                                     <View style={styles.googlecontainer}>
 
                                         <Image source={{ uri: 'https://w7.pngwing.com/pngs/989/129/png-transparent-google-logo-google-search-meng-meng-company-text-logo-thumbnail.png' }} style={{ width: 40, height: 35, resizeMode: 'contain' }} />

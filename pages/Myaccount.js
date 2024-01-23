@@ -29,8 +29,10 @@ const Myaccount = ({Settoken,token}) => {
 
     const handleLogout = async () => {
         try {
+            console.log('working')
             await firebase.auth().signOut();
             // Remove the stored data securely using AsyncStorage
+            console.log('working122')
             await AsyncStorage.clear();
             console.log('Token and email removed successfully!');
             Settoken('');
